@@ -1,0 +1,395 @@
+﻿@model AIEnterpriseCommandCenter.Application.Common.PagedResult<AIEnterpriseCommandCenter.Application.DTOs.Employee.EmployeeDto>
+@using AIEnterpriseCommandCenter.Application.DTOs.Dashboard
+
+@{
+    ViewData["Title"] = "Employees";
+    var dashboard = ViewBag.Dashboard as DashboardDto;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold mb-1">Employee Management</h2>
+        <p class="text-muted mb-0">
+            Manage company employees
+        </p>
+    </div>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Create"
+        class="btn btn-primary px-4">
+
+            <i class="bi bi-plus-circle me-1"></i>
+
+            Add Employee
+
+        </a>
+    }
+</div>
+
+<!-- Dashboard Cards -->
+<!-- Employee Statistics -->
+
+<div class="row g-4 mb-4">
+
+    <!-- Total Employees -->
+    <div class="col-lg-3 col-md-6">
+
+        <div class="emp-card blue">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <small>Total Employees</small>
+
+                    <h2>@dashboard?.TotalEmployees</h2>
+
+                    <small>Registered Employees</small>
+
+                </div>
+
+                <div class="dashboard-icon icon-blue">
+
+                    <i class="bi bi-people-fill"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Active Employees -->
+    <div class="col-lg-3 col-md-6">
+
+        <div class="emp-card green">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <small>Active Employees</small>
+
+                    <h2>@dashboard?.ActiveEmployees</h2>
+
+                    <small>Currently Working</small>
+
+                </div>
+
+                <div class="dashboard-icon icon-green">
+
+                    <i class="bi bi-person-check-fill"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Inactive Employees -->
+    <div class="col-lg-3 col-md-6">
+
+        <div class="emp-card orange">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <small>Inactive Employees</small>
+
+                    <h2>@dashboard?.InactiveEmployees</h2>
+
+                    <small>Not Active</small>
+
+                </div>
+
+                <div class="dashboard-icon icon-orange">
+
+                    <i class="bi bi-person-dash-fill"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Departments -->
+    <div class="col-lg-3 col-md-6">
+
+        <div class="emp-card red">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <small>Departments</small>
+
+                    <h2>@dashboard?.TotalDepartments</h2>
+
+                    <small>Business Units</small>
+
+                </div>
+
+                <div class="dashboard-icon icon-red">
+
+                    <i class="bi bi-building-fill"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Search -->
+
+<div class="search-card mb-4">
+
+    <form asp-action="Index" method="get">
+
+        <div class="input-group">
+
+            <span class="input-group-text">
+                <i class="bi bi-search"></i>
+            </span>
+
+            <input type="text"
+                   name="searchTerm"
+                   value="@ViewBag.SearchTerm"
+                   class="form-control"
+                   placeholder="Search by employee code, name, email or department..." />
+
+            <button class="btn btn-primary" type="submit">
+                Search
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Clear
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Employee Table -->
+
+
+
+    <table class="table table-hover align-middle">
+        <thead class="table-header-custom">
+
+        <tr>
+
+            <th>Code</th>
+
+            <th>Name</th>
+
+            <th>Email</th>
+
+            <th>Department</th>
+
+            <th>Designation</th>
+
+            <th>Status</th>
+
+            <th width="150">Action</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var employee in Model.Items)
+        {
+            <tr>
+
+                <td>@employee.EmployeeCode</td>
+
+                <td>@employee.FullName</td>
+
+                <td>@employee.Email</td>
+
+                <td>@employee.Department</td>
+
+                <td>@employee.Designation</td>
+
+                <td>
+
+                    @if (employee.IsActive)
+                    {
+                        <span class="badge rounded-pill bg-success">
+                            <i class="bi bi-check-circle-fill me-1"></i>
+                            Active
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge rounded-pill bg-danger">
+                            <i class="bi bi-x-circle-fill me-1"></i>
+                            Inactive
+                        </span>
+                    }
+
+                </td>
+
+                <td>
+
+                    <div class="dropdown">
+
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                                data-bs-toggle="dropdown">
+
+                            <i class="bi bi-gear"></i>
+
+                            Manage
+
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <li>
+
+                                <a class="dropdown-item"
+                                   asp-action="Details"
+                                   asp-route-id="@employee.Id">
+
+                                    <i class="bi bi-eye me-2"></i>
+
+                                    View Details
+
+                                </a>
+
+                            </li>
+
+                            <li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a class="dropdown-item"
+                                    asp-action="Edit"
+                                    asp-route-id="@employee.Id">
+
+                                        <i class="bi bi-pencil-square me-2"></i>
+
+                                        Edit Employee
+
+                                    </a>
+                                }
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a class="dropdown-item text-danger"
+                                    asp-action="Delete"
+                                    asp-route-id="@employee.Id">
+
+                                        <i class="bi bi-trash3 me-2"></i>
+
+                                        Delete Employee
+
+                                    </a>
+                                }
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+
+<div class="text-muted mb-2">
+
+    Showing
+
+    <strong>
+        @((Model.PageNumber - 1) * Model.PageSize + 1)
+    </strong>
+
+    -
+
+    <strong>
+        @(Math.Min(Model.PageNumber * Model.PageSize, Model.TotalRecords))
+    </strong>
+
+    of
+
+    <strong>
+        @Model.TotalRecords
+    </strong>
+
+    employees
+
+</div>
+
+<nav class="mt-4">
+
+    <ul class="pagination justify-content-end">
+
+        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+
+            <a class="page-link"
+               asp-action="Index"
+               asp-route-page="@(Model.PageNumber - 1)">
+
+                Previous
+
+            </a>
+
+        </li>
+
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@i">
+
+                    @i
+
+                </a>
+
+            </li>
+        }
+
+        <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+
+            <a class="page-link"
+               asp-action="Index"
+               asp-route-page="@(Model.PageNumber + 1)">
+
+                Next
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</nav>

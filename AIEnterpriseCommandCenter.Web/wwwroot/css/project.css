@@ -1,0 +1,67 @@
+﻿.project-card {
+    background: #16233d;
+    border-radius: 18px;
+    padding: 24px;
+    color: white;
+    transition: .3s;
+    border: 1px solid rgba(255,255,255,.08);
+    height: 100%;
+}
+
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,.25);
+    }
+
+    .project-card h4 {
+        font-weight: 700;
+        font-size: 24px;
+    }
+
+    .project-card p {
+        color: #aeb7c8;
+    }
+
+.progress {
+    height: 8px;
+    border-radius: 20px;
+    background: #243453;
+}
+
+.progress-bar {
+    border-radius: 20px;
+}
+
+.status-badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+    .status-badge.active {
+        background: #0f5132;
+        color: #6ee7b7;
+    }
+
+    .status-badge.planning {
+        background: #1e3a8a;
+        color: #93c5fd;
+    }
+
+    .status-badge.completed {
+        background: #14532d;
+        color: #86efac;
+    }
+
+    .status-badge.onhold {
+        background: #78350f;
+        color: #fcd34d;
+    }
+
+
+    .project-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(0,0,0,.18);
+    }
+

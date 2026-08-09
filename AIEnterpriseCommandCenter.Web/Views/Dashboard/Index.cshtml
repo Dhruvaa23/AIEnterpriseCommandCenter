@@ -1,0 +1,701 @@
+﻿@model AIEnterpriseCommandCenter.Application.DTOs.Dashboard.DashboardDto
+@using AIEnterpriseCommandCenter.Web.Helpers
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2 class="mb-4 fw-bold">Dashboard</h2>
+
+<div class="dashboard-grid">
+
+    <!-- Employees -->
+
+    <div class="dashboard-card card-blue">
+
+        <div class="kpi-header">
+
+            <div class="kpi-title">
+                Total Employees
+            </div>
+
+            <div class="card-icon">
+                <i class="bi bi-people-fill"></i>
+            </div>
+
+        </div>
+
+        <div class="kpi-value">
+            @Model.TotalEmployees
+        </div>
+
+        <div class="kpi-footer">
+
+            <div class="card-trend">
+                <i class="bi bi-arrow-up"></i>
+                +12 This Month
+            </div>
+
+        </div>
+
+        <div class="card-progress">
+            <span style="width:75%"></span>
+        </div>
+
+    </div>
+
+    <!-- Assets -->
+
+    <div class="dashboard-card card-green">
+
+        <div class="kpi-header">
+
+            <div class="kpi-title">
+                Total Assets
+            </div>
+
+            <div class="card-icon">
+                <i class="bi bi-laptop"></i>
+            </div>
+
+        </div>
+
+        <div class="kpi-value">
+            @Model.TotalAssets
+        </div>
+
+        <div class="kpi-footer">
+
+            <div class="kpi-text">
+                Company Assets
+            </div>
+
+        </div>
+
+        <div class="card-progress">
+            <span style="width:68%"></span>
+        </div>
+
+    </div>
+
+    <!-- Tickets -->
+
+    <div class="dashboard-card card-orange">
+
+        <div class="kpi-header">
+
+            <div class="kpi-title">
+                Open Tickets
+            </div>
+
+            <div class="card-icon">
+                <i class="bi bi-headset"></i>
+            </div>
+
+        </div>
+
+        <div class="kpi-value">
+            @Model.OpenTickets
+        </div>
+
+        <div class="kpi-footer">
+
+            <div class="kpi-text">
+                Pending Support
+            </div>
+
+        </div>
+
+        <div class="card-progress">
+            <span style="width:45%"></span>
+        </div>
+
+    </div>
+
+    <!-- Projects -->
+
+    <div class="dashboard-card card-purple">
+
+        <div class="kpi-header">
+
+            <div class="kpi-title">
+                Total Projects
+            </div>
+
+            <div class="card-icon">
+                <i class="bi bi-kanban-fill"></i>
+            </div>
+
+        </div>
+
+        <div class="kpi-value">
+            @Model.TotalProjects
+        </div>
+
+        <div class="kpi-footer">
+
+            <div class="kpi-text">
+                Active & Completed
+            </div>
+
+        </div>
+
+        <div class="card-progress">
+            <span style="width:82%"></span>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= Charts ================= -->
+
+<div class="row g-4 mt-2">
+
+    <!-- Employee Growth -->
+    <div class="col-lg-8">
+
+        <div class="dashboard-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h5>Employee Growth</h5>
+
+                    <small>Monthly employee statistics</small>
+
+                </div>
+
+                <div class="panel-icon blue">
+
+                    <i class="bi bi-graph-up-arrow"></i>
+
+                </div>
+
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="employeeChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Asset Distribution -->
+
+    <div class="col-lg-4">
+
+        <div class="dashboard-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h5>Asset Distribution</h5>
+
+                    <small>Company asset overview</small>
+
+                </div>
+
+                <div class="panel-icon green">
+
+                    <i class="bi bi-pie-chart-fill"></i>
+
+                </div>
+
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="assetChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= Analytics ================= -->
+
+<div class="row g-4 mt-1">
+
+    <!-- Ticket Status -->
+
+    <div class="col-lg-6">
+
+        <div class="dashboard-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h5>Ticket Status Distribution</h5>
+
+                    <small>Overview of service desk ticket statuses</small>
+
+                </div>
+
+                <div class="panel-icon blue">
+
+                    <i class="bi bi-headset"></i>
+
+                </div>
+
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="ticketChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Project Progress -->
+
+    <div class="col-lg-6">
+
+        <div class="dashboard-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h5>Project Progress</h5>
+
+                    <small>Current completion percentage of projects</small>
+
+                </div>
+
+                <div class="panel-icon purple">
+
+                    <i class="bi bi-kanban-fill"></i>
+
+                </div>
+
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="projectChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="dashboard-panel mt-4">
+
+    <div class="panel-header">
+
+        <div>
+            <h4 class="fw-bold mb-1">Quick Actions</h4>
+            <small class="text-muted">Frequently used operations</small>
+        </div>
+
+        <div class="panel-icon blue">
+            <i class="bi bi-lightning-charge-fill"></i>
+        </div>
+
+    </div>
+
+    <div class="quick-grid">
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-controller="Employee"
+               asp-action="Create"
+               class="quick-tile employee">
+
+                <i class="bi bi-person-plus-fill"></i>
+
+                <span>Add Employee</span>
+
+            </a>
+        }
+
+        @if (User.IsInRole("Admin") || User.IsInRole("ITAdmin"))
+        {
+            <a asp-controller="Asset"
+               asp-action="Create"
+               class="quick-tile asset">
+
+                <i class="bi bi-laptop"></i>
+
+                <span>Add Asset</span>
+
+            </a>
+        }
+
+        @if (User.IsInRole("Admin") ||
+                User.IsInRole("ITAdmin") ||
+                User.IsInRole("Employee"))
+        {
+            <a asp-controller="ServiceDesk"
+               asp-action="Create"
+               class="quick-tile ticket">
+
+                <i class="bi bi-headset"></i>
+
+                <span>Create Ticket</span>
+
+            </a>
+        }
+
+        @if (User.IsInRole("Admin") ||
+                User.IsInRole("Manager"))
+        {
+            <a asp-controller="Report"
+               asp-action="Index"
+               class="quick-tile report">
+
+                <i class="bi bi-bar-chart-line-fill"></i>
+
+                <span>Reports</span>
+
+            </a>
+        }
+
+    </div>
+
+</div>
+
+
+<div class="row mt-4">
+
+    <div class="col-lg-6">
+
+        <div class="card dashboard-panel activity-panel">
+
+            <div class="panel-header">
+                <div>
+                    <h4>Recent Activity</h4>
+                    <span>Latest enterprise updates</span>
+                </div>
+
+                <div class="section-icon purple">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+            </div>
+
+            <div class="activity-list">
+
+                @foreach (var activity in Model.RecentActivities.Take(5))
+                {
+                    <div class="activity-item">
+
+                        <div class="activity-icon @activity.Color">
+                            <i class="@activity.Icon"></i>
+                        </div>
+
+                        <div class="activity-content">
+                            <strong>@activity.Title</strong>
+                            <p>@activity.Description</p>
+                            <small>@TimeAgoHelper.GetTimeAgo(activity.Date)</small>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===========================
+             AI INSIGHTS
+    ============================ -->
+
+
+
+    <div class="col-lg-6">
+
+        <div class="card dashboard-panel activity-panel">
+
+            <div class="panel-header">
+                <div>
+                    <h4>AI Insights</h4>
+                    <span>AI Generated Recommendations</span>
+                </div>
+
+                <div class="section-icon blue">
+                    <i class="bi bi-stars"></i>
+                </div>
+            </div>
+
+            <div class="insight-list">
+
+            @if (Model.AIInsights.Any())
+            {
+                @foreach (var item in Model.AIInsights)
+                {
+                    <div class="ai-item @item.Severity.ToLower()">
+
+                        <div class="ai-icon">
+                            <i class="@item.Icon"></i>
+                        </div>
+
+                        <div>
+
+                            <h6>@item.Title</h6>
+
+                            <small>@item.Description</small>
+
+                        </div>
+
+                    </div>
+                }
+            }
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+
+       
+                fetch('/Dashboard/EmployeeGrowth')
+
+        .then(response => response.json())
+
+        .then(result => {
+
+        const labels = result.map(x => x.month);
+
+        const values = result.map(x => x.totalEmployees);
+
+        new Chart(
+
+        document.getElementById('employeeChart'),
+
+        {
+
+        type:'line',
+
+        data:{
+
+        labels:labels,
+
+        datasets:[{
+
+        label:'Employees',
+
+        data:values,
+
+        borderColor:'#2563EB',
+        borderWidth: 3,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+
+        backgroundColor:'rgba(37,99,235,.12)',
+
+        fill:true,
+
+        tension:.4
+
+        }]
+
+        },
+
+                options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            layout: {
+                padding: 10
+            },
+
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        boxWidth: 10,
+                        padding: 18
+                    }
+                }
+            }
+        }
+
+        });
+
+        });
+
+            fetch('/Dashboard/AssetDistribution')
+        .then(response => response.json())
+        .then(result => {
+
+            const labels = Object.keys(result);
+            const values = Object.values(result);
+
+            new Chart(
+                document.getElementById('assetChart'),
+                {
+                    type: 'doughnut',
+
+                    data: {
+                        labels: labels,
+
+                        datasets: [{
+                            data: values,
+
+                            backgroundColor: [
+                                '#2563EB',
+                                '#10B981',
+                                '#F59E0B',
+                                '#EF4444',
+                                '#8B5CF6',
+                                '#06B6D4',
+                                '#F97316',
+                                '#84CC16'
+                            ]
+                        }]
+                    },
+
+                            options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            layout: {
+                padding: 10
+            },
+
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        boxWidth: 10,
+                        padding: 18
+                    }
+                }
+            }
+        }
+                });
+        });
+
+                fetch('/Dashboard/TicketStatusChart')
+        .then(response => response.json())
+        .then(result => {
+
+            const labels = result.map(x => x.status);
+            const values = result.map(x => x.total);
+
+            new Chart(
+                document.getElementById('ticketChart'),
+                {
+                    type: 'doughnut',
+
+                    data: {
+
+                        labels: labels,
+
+                        datasets: [{
+
+                            data: values,
+
+                            backgroundColor: [
+
+                                '#2563EB', // Open
+                                '#F59E0B', // In Progress
+                                '#10B981', // Resolved
+                                '#6B7280', // Closed
+                                '#8B5CF6', // Pending
+                                '#06B6D4'
+
+                            ]
+
+                        }]
+                    },
+
+                            options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            layout: {
+                padding: 10
+            },
+
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        boxWidth: 10,
+                        padding: 18
+                    }
+                }
+            }
+        }
+
+                });
+
+        });
+
+            fetch('/Dashboard/ProjectProgress')
+        .then(response => response.json())
+        .then(result => {
+
+            const labels = result.map(x => x.projectName);
+            const values = result.map(x => x.progress);
+
+            new Chart(document.getElementById('projectChart'), {
+
+                type: 'bar',
+
+                data: {
+                    labels: labels,
+
+                    datasets: [{
+                        label: 'Progress',
+                        data: values,
+                        backgroundColor: '#2563EB',
+                        borderRadius: 10
+                    }]
+                },
+
+                options: {
+                    indexAxis: 'y', // Horizontal Bar
+
+                        responsive: true,
+        maintainAspectRatio: false,
+
+        layout: {
+            padding: 10
+        },
+
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    usePointStyle: true,
+                    boxWidth: 10,
+                    padding: 18
+                }
+            }
+        }
+                }
+            });
+
+        });
+
+    </script>
+
+}

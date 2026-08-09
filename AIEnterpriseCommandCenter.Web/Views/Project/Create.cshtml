@@ -1,0 +1,236 @@
+﻿
+
+@model AIEnterpriseCommandCenter.Application.DTOs.Project.CreateProjectDto
+
+@{
+    ViewData["Title"] = "Create Project";
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-kanban-fill text-primary me-2"></i>
+                Create New Project
+            </h2>
+
+            <p class="text-muted mb-0">
+                Create and manage enterprise projects.
+            </p>
+
+        </div>
+
+        <a asp-action="Index" class="btn btn-light border rounded-pill px-4">
+            <i class="bi bi-arrow-left me-2"></i>Back
+        </a>
+
+    </div>
+
+
+    <form asp-action="Create" method="post">
+
+        <div class="row">
+
+            <!-- LEFT -->
+
+            <div class="col-lg-8">
+
+                <div class="card border-0 shadow-lg rounded-4 mb-4">
+
+                    <div class="card-body p-4">
+
+                        <h5 class="fw-bold mb-4">
+                            <i class="bi bi-folder2-open text-primary me-2"></i>
+                            Project Information
+                        </h5>
+
+                        <div class="mb-4">
+
+                            <label asp-for="ProjectName" class="form-label fw-semibold"></label>
+
+                            <input asp-for="ProjectName"
+                                   class="form-control form-control-lg"
+                                   placeholder="Enter project name..." />
+
+                            <span asp-validation-for="ProjectName" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label asp-for="Description" class="form-label fw-semibold"></label>
+
+                            <textarea asp-for="Description"
+                                      rows="6"
+                                      class="form-control"
+                                      placeholder="Write project description..."></textarea>
+
+                            <span asp-validation-for="Description" class="text-danger"></span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+
+            <div class="col-lg-4">
+
+                <div class="card border-0 shadow-lg rounded-4">
+
+                    <div class="card-body p-4">
+
+                        <h5 class="fw-bold mb-4">
+
+                            <i class="bi bi-sliders text-warning me-2"></i>
+
+                            Project Settings
+
+                        </h5>
+
+                        <div class="mb-3">
+
+                            <label asp-for="ManagerId" class="form-label fw-semibold">
+
+                                Project Manager
+
+                            </label>
+
+                            <select asp-for="ManagerId"
+                                    asp-items="ViewBag.Managers"
+                                    class="form-select form-select-lg">
+                            </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label asp-for="Status" class="form-label fw-semibold"></label>
+
+                            <select asp-for="Status"
+                                    asp-items="Html.GetEnumSelectList<AIEnterpriseCommandCenter.Domain.Enums.ProjectStatus>()"
+                                    class="form-select form-select-lg">
+                            </select>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label asp-for="Priority" class="form-label fw-semibold"></label>
+
+                            <select asp-for="Priority"
+                                    asp-items="Html.GetEnumSelectList<AIEnterpriseCommandCenter.Domain.Enums.ProjectPriority>()"
+                                    class="form-select form-select-lg">
+                            </select>
+
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+
+                            <div class="col-12 mb-3">
+
+                                <label asp-for="StartDate" class="form-label fw-semibold"></label>
+
+                                <input asp-for="StartDate"
+                                       type="date"
+                                       class="form-control" />
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label asp-for="EndDate" class="form-label fw-semibold"></label>
+
+                                <input asp-for="EndDate"
+                                       type="date"
+                                       class="form-control" />
+
+                            </div>
+
+                        </div>
+                        <hr class="my-4" />
+
+                        <div class="d-grid gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg rounded-pill">
+
+                                <i class="bi bi-plus-circle me-2"></i>
+
+                                Create Project
+
+                            </button>
+
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary rounded-pill">
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+       
+
+    </form>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}
+
+<style>
+
+    body {
+        background: #f4f7fb;
+    }
+
+    .card {
+        border-radius: 20px;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 12px;
+        padding: 12px;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 .15rem rgba(59,130,246,.15);
+        }
+
+    textarea {
+        resize: none;
+    }
+
+    .btn {
+        border-radius: 30px;
+    }
+
+    h5 {
+        color: #1f2937;
+    }
+
+</style>

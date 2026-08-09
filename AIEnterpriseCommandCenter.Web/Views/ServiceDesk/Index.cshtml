@@ -1,0 +1,131 @@
+﻿@model IEnumerable<AIEnterpriseCommandCenter.Application.DTOs.ServiceDesk.TicketDto>
+
+@{
+    ViewData["Title"] = "IT Service Desk";
+}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">IT Service Desk</h2>
+            <p class="text-muted mb-0">
+                AI classifies every ticket and suggests a first-response fix
+            </p>
+        </div>
+        @if (User.IsInRole("Admin") ||
+             User.IsInRole("ITAdmin") ||
+             User.IsInRole("Employee"))
+         {
+        <a asp-action="Create" class="btn btn-info text-white rounded-pill px-4">
+            <i class="bi bi-plus-lg"></i> Raise Ticket
+        </a>
+         }
+    </div>
+
+    <!-- OPEN -->
+
+    <div class="mb-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h5 class="text-uppercase">
+                OPEN
+            </h5>
+
+            <span class="badge bg-warning">
+                @Model.Count(x => x.Status == AIEnterpriseCommandCenter.Domain.Enums.TicketStatus.Open)
+            </span>
+
+        </div>
+
+        @foreach (var ticket in Model.Where(x => x.Status == AIEnterpriseCommandCenter.Domain.Enums.TicketStatus.Open))
+        {
+            <partial name="_TicketCard" model="ticket" />
+        }
+
+    </div>
+
+    <!-- IN PROGRESS -->
+
+    <div class="mb-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h5 class="text-uppercase">
+                IN PROGRESS
+            </h5>
+
+            <span class="badge bg-primary">
+                @Model.Count(x => x.Status == AIEnterpriseCommandCenter.Domain.Enums.TicketStatus.InProgress)
+            </span>
+
+        </div>
+
+        @foreach (var ticket in Model.Where(x => x.Status == AIEnterpriseCommandCenter.Domain.Enums.TicketStatus.InProgress))
+        {
+            <partial name="_TicketCard" model="ticket" />
+        }
+
+    </div>
+
+    <!-- RESOLVED -->
+
+    <div class="mb-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h5 class="text-uppercase">
+                RESOLVED
+            </h5>
+
+            <span class="badge bg-success">
+                @Model.Count(x => x.Status == AIEnterpriseCommandCenter.Domain.Enums.TicketStatus.Resolved)
+            </span>
+
+        </div>
+
+        @foreach (var ticket in Model.Where(x => x.Status == AIEnterpriseCommandCenter.Domain.Enums.TicketStatus.Resolved))
+        {
+            <partial name="_TicketCard" model="ticket" />
+        }
+
+    </div>
+
+</div>
+
+
+<!-- Modal Loads Here -->
+
+<div id="modalContainer"></div>
+
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function(){
+
+            $(document).on("click",".ticket-card",function(){
+
+                var id=$(this).data("id");
+
+                $.get("/ServiceDesk/Details/"+id,function(data){
+
+                    $("#modalContainer").html(data);
+
+                    var modal=new bootstrap.Modal(document.getElementById("ticketModal"));
+
+                    modal.show();
+
+                });
+
+            });
+
+        });
+
+    </script>
+
+}

@@ -1,0 +1,264 @@
+﻿@model AIEnterpriseCommandCenter.Application.DTOs.ServiceDesk.CreateTicketDto
+
+@{
+    ViewData["Title"] = "Raise Ticket";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header bg-primary text-white py-3">
+            <h3 class="mb-0">
+                <i class="bi bi-plus-circle"></i>
+                Raise IT Service Ticket
+            </h3>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form asp-action="Create" method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <div class="row">
+
+                    <!-- Title -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Title"
+                               class="form-label fw-semibold"></label>
+
+                        <input asp-for="Title"
+                               class="form-control"
+                               placeholder="Enter ticket title" />
+
+                        <span asp-validation-for="Title"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <!-- Employee -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="EmployeeId"
+                               class="form-label fw-semibold">
+                            Employee
+                        </label>
+
+                        <select asp-for="EmployeeId"
+                                class="form-select">
+
+                            <option value="">-- Select Employee --</option>
+
+                            @foreach (var emp in ViewBag.Employees)
+                            {
+                                <option value="@emp.Id">
+                                    @emp.FirstName @emp.LastName
+                                </option>
+                            }
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Category -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Category"
+                               class="form-label fw-semibold"></label>
+
+                        <select asp-for="Category"
+                                class="form-select"
+                                asp-items="Html.GetEnumSelectList<AIEnterpriseCommandCenter.Domain.Enums.TicketCategory>()">
+                        </select>
+
+                    </div>
+
+                    <!-- Priority -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Priority"
+                               class="form-label fw-semibold"></label>
+
+                        <select asp-for="Priority"
+                                class="form-select"
+                                asp-items="Html.GetEnumSelectList<AIEnterpriseCommandCenter.Domain.Enums.TicketPriority>()">
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <!-- Description -->
+
+                <div class="mb-4">
+
+                    <label asp-for="Description"
+                           class="form-label fw-semibold"></label>
+
+                    <textarea asp-for="Description"
+                              rows="6"
+                              class="form-control"
+                              placeholder="Describe your issue...">
+                    </textarea>
+
+                    <span asp-validation-for="Description"
+                          class="text-danger"></span>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <button type="button"
+                            id="analyzeAI"
+                            class="btn btn-warning">
+
+                        <i class="bi bi-stars"></i>
+                        Analyze with AI
+
+                    </button>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label fw-semibold">
+
+                        Suggested Solution
+
+                    </label>
+
+                    <textarea asp-for="AISuggestedSolution"
+                        id="suggestedSolution"
+                              class="form-control"
+                              rows="4"
+                              readonly>
+
+                    </textarea>
+                    <input asp-for="AIConfidence"
+                           id="aiConfidence"
+                           type="hidden" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="fw-bold">
+
+                        AI Confidence :
+
+                    </label>
+
+                    <span 
+                        id="confidence"
+                          class="badge bg-success">
+
+                        -
+
+                    </span>
+
+                </div>
+
+                <div class="d-flex justify-content-end">
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary me-2">
+
+                        Cancel
+
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-send"></i>
+
+                        Raise Ticket
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        document.getElementById("analyzeAI").addEventListener("click", async () => {
+
+            const description =
+                document.getElementById("Description").value;
+
+            if (!description.trim()) {
+
+                alert("Please enter the issue description.");
+
+                return;
+            }
+
+            const response = await fetch("/AI/AnalyzeTicket", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    issue: description
+
+                })
+
+            });
+
+            const data = await response.json();
+
+                   const categoryMap = {
+            "Hardware": "0",
+            "Software": "1",
+            "Network": "2",
+            "Account": "3",
+            "Other": "4"
+        };
+
+        const priorityMap = {
+            "Low": "0",
+            "Medium": "1",
+            "High": "2",
+            "Critical": "3"
+        };
+
+        document.getElementById("Category").value =
+            categoryMap[data.category] ?? "";
+
+        document.getElementById("Priority").value =
+            priorityMap[data.priority] ?? "";
+
+            document.getElementById("Title").value = data.title;
+
+            document.getElementById("suggestedSolution").value =
+                data.suggestedSolution;
+            document.getElementById("aiConfidence").value =
+                data.confidence;
+            document.getElementById("confidence").innerText =
+                data.confidence + "%";
+
+        });
+
+    </script>
+}

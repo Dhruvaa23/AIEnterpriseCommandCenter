@@ -1,0 +1,680 @@
+﻿@model AIEnterpriseCommandCenter.Application.Common.PagedResult<AIEnterpriseCommandCenter.Application.DTOs.Asset.AssetDto>
+
+@{
+    ViewData["Title"] = "Assets";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <div>
+        <h2 class="fw-bold mb-1">Asset Management</h2>
+        <p class="asset-subtitle">Manage company IT assets</p>
+    </div>
+
+    <div class="d-flex gap-2">
+
+        <a asp-action="ExportToExcel"
+           class="btn btn-outline-success">
+
+            <i class="bi bi-file-earmark-excel me-1"></i>
+            Export
+
+        </a>
+
+        @if (User.IsInRole("Admin") || User.IsInRole("ITAdmin"))
+         {
+        <button class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#addAssetModal">
+
+            <i class="bi bi-plus-lg me-1"></i>
+            Add Asset
+
+        </button>
+         }
+    </div>
+
+</div>
+
+@{
+    var dashboard = ViewBag.Dashboard as AIEnterpriseCommandCenter.Application.DTOs.Asset.AssetDashboardDto;
+}
+
+<div class="row mb-4">
+
+    <!-- Total Assets -->
+    <div class="col-lg-3 col-md-6 mb-3">
+
+        <div class="asset-card asset-border-blue">
+
+            <div class="d-flex justify-content-between align-items-start">
+
+                <div>
+
+                    <h6 class="text-muted mb-2">
+                        Total Assets
+                    </h6>
+
+                    <h2 class="fw-bold mb-1">
+                        @dashboard?.TotalAssets
+                    </h2>
+
+                    <small class="text-muted">
+                        Registered Assets
+                    </small>
+
+                </div>
+
+                <div class="asset-icon bg-blue-soft">
+
+                    <i class="bi bi-laptop"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Available Assets -->
+    <div class="col-lg-3 col-md-6 mb-3">
+
+        <div class="asset-card asset-border-green">
+
+            <div class="d-flex justify-content-between align-items-start">
+
+                <div>
+
+                    <h6 class="text-muted mb-2">
+                        Available
+                    </h6>
+
+                    <h2 class="fw-bold text-success mb-1">
+                        @dashboard?.AvailableAssets
+                    </h2>
+
+                    <small class="text-muted">
+                        Ready for Assignment
+                    </small>
+
+                </div>
+
+                <div class="asset-icon bg-green-soft">
+
+                    <i class="bi bi-check-circle"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Assigned Assets -->
+    <div class="col-lg-3 col-md-6 mb-3">
+
+        <div class="asset-card asset-border-orange">
+
+            <div class="d-flex justify-content-between align-items-start">
+
+                <div>
+
+                    <h6 class="text-muted mb-2">
+                        Assigned
+                    </h6>
+
+                    <h2 class="fw-bold text-warning mb-1">
+                        @dashboard?.AssignedAssets
+                    </h2>
+
+                    <small class="text-muted">
+                        In Use
+                    </small>
+
+                </div>
+
+                <div class="asset-icon bg-orange-soft">
+
+                    <i class="bi bi-person-check"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Asset Value -->
+    <div class="col-lg-3 col-md-6 mb-3">
+
+        <div class="asset-card asset-border-red">
+
+            <div class="d-flex justify-content-between align-items-start">
+
+                <div>
+
+                    <h6 class="text-muted mb-2">
+                        Asset Value
+                    </h6>
+
+                    <h4 class="fw-bold text-danger mb-1">
+                        ₹ @dashboard?.TotalAssetValue.ToString("N0")
+                    </h4>
+
+                    <small class="text-muted">
+                        Company Investment
+                    </small>
+
+                </div>
+
+                <div class="asset-icon bg-red-soft">
+
+                    <i class="bi bi-currency-rupee"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="search-card mb-4">
+
+    <form asp-action="Index" method="get">
+
+        <div class="input-group">
+
+            <span class="input-group-text">
+                <i class="bi bi-search"></i>
+            </span>
+
+            <input type="text"
+                   name="searchTerm"
+                   value="@ViewBag.SearchTerm"
+                   class="form-control"
+                   placeholder="Search by asset code, name or category..." />
+
+            <button class="btn btn-primary" type="submit">
+                Search
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Clear
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+<table class="table table-hover align-middle">
+    <thead class="table-header-custom">
+
+        <tr>
+
+            <th>Code</th>
+
+            <th>Name</th>
+
+            <th>Category</th>
+
+            <th>Brand</th>
+
+            <th>Status</th>
+
+            <th>Employee</th>
+
+            <th>Action</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+
+                <td>@item.AssetCode</td>
+
+                <td>@item.AssetName</td>
+
+                <td>@item.Category</td>
+
+                <td>@item.Brand</td>
+
+                <td>
+
+                    @if (item.Status == "Available")
+                    {
+                        <span class="badge rounded-pill bg-success px-3 py-2">
+                            <i class="bi bi-check-circle-fill me-1"></i>
+                            Available
+                        </span>
+                    }
+                    else if (item.Status == "Assigned")
+                    {
+                        <span class="badge rounded-pill bg-primary px-3 py-2">
+                            <i class="bi bi-person-check-fill me-1"></i>
+                            Assigned
+                        </span>
+                    }
+                    else if (item.Status == "Under Repair")
+                    {
+                        <span class="badge rounded-pill bg-warning text-dark px-3 py-2">
+                            <i class="bi bi-tools me-1"></i>
+                            Under Repair
+                        </span>
+                    }
+                    else if (item.Status == "Retired")
+                    {
+                        <span class="badge rounded-pill bg-secondary px-3 py-2">
+                            <i class="bi bi-archive-fill me-1"></i>
+                            Retired
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge rounded-pill bg-dark px-3 py-2">
+                            @item.Status
+                        </span>
+                    }
+
+                </td>
+
+                <td>@item.EmployeeName</td>
+
+               
+
+                <td>
+
+                    <div class="dropdown">
+
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                                type="button"
+                                data-bs-toggle="dropdown">
+
+                            <i class="bi bi-gear me-1"></i>
+                            Manage
+
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <li>
+                                <a class="dropdown-item"
+                                   asp-action="Details"
+                                   asp-route-id="@item.Id">
+
+                                    <i class="bi bi-eye me-2"></i>
+                                    View Details
+
+                                </a>
+                            </li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                @if (User.IsInRole("Admin") || User.IsInRole("ITAdmin"))
+                                {
+                                    <a class="dropdown-item"
+                                    asp-action="Edit"
+                                    asp-route-id="@item.Id">
+
+                                        <i class="bi bi-pencil-square me-2"></i>
+                                        Edit Asset
+
+                                    </a>
+                                }
+                            </li>
+
+                            @if (item.Status == "Available")
+                            {
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-action="Assign"
+                                       asp-route-id="@item.Id">
+
+                                        <i class="bi bi-person-check me-2"></i>
+                                        Assign Asset
+
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-action="Return"
+                                       asp-route-id="@item.Id">
+
+                                        <i class="bi bi-arrow-return-left me-2"></i>
+                                        Return Asset
+
+                                    </a>
+                                </li>
+                            }
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                <button class="dropdown-item text-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteAssetModal"
+                                        data-id="@item.Id"
+                                        data-name="@item.AssetName">
+
+                                    <i class="bi bi-trash3 me-2"></i>
+
+                                    Delete Asset
+
+                                </button>
+                                }
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </td>
+
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<div class="text-muted mb-2">
+
+    Showing
+
+    <strong>
+        @((Model.PageNumber - 1) * Model.PageSize + 1)
+    </strong>
+
+    -
+
+    <strong>
+        @(Math.Min(Model.PageNumber * Model.PageSize, Model.TotalRecords))
+    </strong>
+
+    of
+
+    <strong>
+        @Model.TotalRecords
+    </strong>
+
+    assets
+
+</div>
+
+<nav class="mt-4">
+
+    <ul class="pagination justify-content-end">
+
+        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+
+            <a class="page-link"
+               asp-action="Index"
+               asp-route-page="@(Model.PageNumber - 1)">
+
+                Previous
+
+            </a>
+
+        </li>
+
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@i">
+
+                    @i
+
+                </a>
+
+            </li>
+        }
+
+        <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+
+            <a class="page-link"
+               asp-action="Index"
+               asp-route-page="@(Model.PageNumber + 1)">
+
+                Next
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</nav>
+
+<div class="modal fade"
+     id="addAssetModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    <i class="bi bi-laptop"></i>
+
+                    Add New Asset
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <form asp-action="Create" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label>Asset Code</label>
+                            <input name="AssetCode" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Asset Name</label>
+                            <input name="AssetName" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Category</label>
+                            <input name="Category" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Brand</label>
+                            <input name="Brand" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Model</label>
+                            <input name="Model" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Purchase Date</label>
+                            <input name="PurchaseDate"
+                                   type="date"
+                                   class="form-control"
+                                   required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Purchase Price</label>
+                            <input name="PurchasePrice"
+                                   type="number"
+                                   step="0.01"
+                                   class="form-control"
+                                   required />
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        <i class="bi bi-check-circle me-1"></i>
+                        Save Asset
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade"
+     id="deleteAssetModal"
+     tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <form asp-action="Delete"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div class="modal-header bg-danger text-white">
+
+                    <h5 class="modal-title">
+
+                        <i class="bi bi-trash3"></i>
+
+                        Delete Asset
+
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <input type="hidden"
+                           id="deleteAssetId"
+                           name="id" />
+
+                    <p>
+
+                        Are you sure you want to delete
+
+                        <strong id="deleteAssetName"></strong> ?
+
+                    </p>
+
+                    <div class="alert alert-warning mb-0">
+
+                        <i class="bi bi-exclamation-triangle"></i>
+
+                        This action cannot be undone.
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                            type="button">
+
+                        Cancel
+
+                    </button>
+
+                    <button class="btn btn-danger"
+                            type="submit">
+
+                        <i class="bi bi-trash3"></i>
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <script>
+
+        const deleteModal =
+        document.getElementById('deleteAssetModal');
+
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+
+            var button = event.relatedTarget;
+
+            var id = button.getAttribute('data-id');
+
+            var name = button.getAttribute('data-name');
+
+            document.getElementById('deleteAssetId').value = id;
+
+            document.getElementById('deleteAssetName').innerText = name;
+
+        });
+
+    </script>
+
+}

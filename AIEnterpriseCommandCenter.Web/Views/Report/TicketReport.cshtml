@@ -1,0 +1,269 @@
+﻿@model IEnumerable<AIEnterpriseCommandCenter.Application.DTOs.ServiceDesk.TicketDto>
+
+@{
+    ViewData["Title"] = "Ticket Report";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-headset text-primary me-2"></i>
+                Ticket Report
+            </h2>
+
+            <p class="text-muted">
+                IT Service Desk ticket information preview before exporting.
+            </p>
+
+        </div>
+
+        <div>
+
+            <a asp-action="ExportTicketPdf"
+               class="btn btn-danger rounded-pill me-2">
+
+                <i class="bi bi-file-earmark-pdf"></i>
+
+                PDF
+
+            </a>
+
+            <a asp-action="ExportTicketExcel"
+               class="btn btn-success rounded-pill me-2">
+
+                <i class="bi bi-file-earmark-excel"></i>
+
+                Excel
+
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary rounded-pill">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Summary -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body text-center">
+
+                    <h2 class="fw-bold text-primary">
+
+                        @Model.Count()
+
+                    </h2>
+
+                    <div class="text-muted">
+
+                        Total Tickets
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Table -->
+
+    <div class="card border-0 shadow rounded-4">
+
+        <div class="card-header bg-white">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+
+                    <h5 class="fw-bold mb-0">
+
+                        Ticket List
+
+                    </h5>
+
+                </div>
+
+                <div class="col-md-6 text-end">
+
+                    <input type="text"
+                           id="searchTicket"
+                           class="form-control"
+                           placeholder="Search ticket..." />
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0"
+                   id="ticketTable">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Ticket No.</th>
+                        <th>Title</th>
+                        <th>Employee</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Assigned To</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+
+                                <span class="badge bg-dark">
+
+                                    @item.TicketNumber
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <strong>@item.Title</strong>
+
+                            </td>
+
+                            <td>
+
+                                @item.EmployeeName
+
+                            </td>
+
+                            <td>
+
+                                @item.Category
+
+                            </td>
+
+                            <td>
+
+                                @if (item.Priority == AIEnterpriseCommandCenter.Domain.Enums.TicketPriority.High)
+                                {
+                                    <span class="badge bg-danger">High</span>
+                                }
+                                else if (item.Priority == AIEnterpriseCommandCenter.Domain.Enums.TicketPriority.Medium)
+                                {
+                                    <span class="badge bg-warning text-dark">Medium</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Low</span>
+                                }
+
+                            </td>
+
+                            <td>
+
+                                @if (item.Status == AIEnterpriseCommandCenter.Domain.Enums.TicketStatus.Open)
+                                {
+                                    <span class="badge bg-danger">Open</span>
+                                }
+                                else if (item.Status == AIEnterpriseCommandCenter.Domain.Enums.TicketStatus.InProgress)
+                                {
+                                    <span class="badge bg-primary">In Progress</span>
+                                }
+                                else if (item.Status == AIEnterpriseCommandCenter.Domain.Enums.TicketStatus.Resolved)
+                                {
+                                    <span class="badge bg-success">Resolved</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@item.Status</span>
+                                }
+
+                        </td>
+
+                        <td>
+
+                            @(string.IsNullOrWhiteSpace(item.AssignedTo)
+                                                        ? "-"
+                                                        : item.AssignedTo)
+
+                        </td>
+
+                        </tr>
+                                        }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        document.getElementById("searchTicket").addEventListener("keyup", function () {
+
+            var value = this.value.toLowerCase();
+
+            document.querySelectorAll("#ticketTable tbody tr").forEach(function (row) {
+
+                row.style.display =
+                    row.innerText.toLowerCase().includes(value)
+                        ? ""
+                        : "none";
+
+            });
+
+        });
+
+    </script>
+
+}
+
+<style>
+
+    .table tbody tr:hover {
+        background: #f8f9fa;
+    }
+
+    .badge {
+        font-size: .85rem;
+    }
+
+    .card {
+        border-radius: 20px;
+    }
+
+</style>

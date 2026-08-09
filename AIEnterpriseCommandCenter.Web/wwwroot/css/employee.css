@@ -1,0 +1,250 @@
+﻿.emp-card {
+    background: #fff;
+    padding: 20px 24px;
+    border-radius: 18px;
+    min-height: 145px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    position: relative;
+    overflow: hidden;
+    transition: .3s;
+}
+
+    .emp-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 35px rgba(0,0,0,.12);
+    }
+
+    .emp-card.blue {
+        border-left: 5px solid #2563eb;
+    }
+
+    .emp-card.green {
+        border-left: 5px solid #16a34a;
+    }
+
+    .emp-card.orange {
+        border-left: 5px solid #f59e0b;
+    }
+
+    .emp-card.red {
+        border-left: 5px solid #ef4444;
+    }
+
+.dashboard-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.icon-blue {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.icon-green {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.icon-orange {
+    background: #fef3c7;
+    color: #f59e0b;
+}
+
+.icon-red {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.dashboard-card h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 8px 0;
+}
+
+.dashboard-card small {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.table-header-custom th {
+    background: #334155;
+    color: white;
+    padding: 14px 16px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border: none;
+}
+
+    .table-header-custom th:first-child {
+        border-top-left-radius: 10px;
+    }
+
+    .table-header-custom th:last-child {
+        border-top-right-radius: 10px;
+    }
+
+/* =====================================
+   EMPLOYEE PAGE - DARK MODE
+===================================== */
+
+body.dark-mode .emp-card {
+    background: #1E293B;
+    border: 1px solid #334155;
+    box-shadow: 0 10px 25px rgba(0,0,0,.35);
+    color: #F8FAFC;
+}
+
+    body.dark-mode .emp-card:hover {
+        box-shadow: 0 18px 35px rgba(0,0,0,.45);
+    }
+
+    /* Colored Left Border */
+
+    body.dark-mode .emp-card.blue {
+        border-left: 5px solid #3B82F6;
+    }
+
+    body.dark-mode .emp-card.green {
+        border-left: 5px solid #22C55E;
+    }
+
+    body.dark-mode .emp-card.orange {
+        border-left: 5px solid #F59E0B;
+    }
+
+    body.dark-mode .emp-card.red {
+        border-left: 5px solid #EF4444;
+    }
+
+    /* Card Text */
+
+    body.dark-mode .emp-card h2 {
+        color: #F8FAFC;
+    }
+
+    body.dark-mode .emp-card h6,
+    body.dark-mode .emp-card p,
+    body.dark-mode .emp-card span {
+        color: #CBD5E1;
+    }
+
+    body.dark-mode .emp-card small {
+        color: #94A3B8;
+    }
+
+/* Dashboard Icons */
+
+body.dark-mode .icon-blue {
+    background: rgba(59,130,246,.18);
+    color: #60A5FA;
+}
+
+body.dark-mode .icon-green {
+    background: rgba(34,197,94,.18);
+    color: #4ADE80;
+}
+
+body.dark-mode .icon-orange {
+    background: rgba(245,158,11,.18);
+    color: #FBBF24;
+}
+
+body.dark-mode .icon-red {
+    background: rgba(239,68,68,.18);
+    color: #F87171;
+}
+
+/* Search Card */
+
+body.dark-mode .search-card {
+    background: #1E293B;
+    border: 1px solid #334155;
+    box-shadow: 0 10px 25px rgba(0,0,0,.35);
+}
+
+    /* Search Icon */
+
+    body.dark-mode .search-card .input-group-text {
+        background: #0F172A;
+        border: 1px solid #334155;
+        color: #CBD5E1;
+    }
+
+    /* Search Input */
+
+    body.dark-mode .search-card .form-control {
+        background: #0F172A;
+        color: #F8FAFC;
+        border: 1px solid #334155;
+    }
+
+        body.dark-mode .search-card .form-control::placeholder {
+            color: #94A3B8;
+        }
+
+        body.dark-mode .search-card .form-control:focus {
+            background: #0F172A;
+            color: white;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 .2rem rgba(59,130,246,.20);
+        }
+
+/* Table */
+
+body.dark-mode .table {
+    color: #F8FAFC;
+}
+
+    body.dark-mode .table tbody tr {
+        background: #1E293B;
+    }
+
+    body.dark-mode .table tbody td {
+        border-color: #334155;
+        color: #E2E8F0;
+    }
+
+body.dark-mode .table-hover tbody tr:hover {
+    background: #273449;
+}
+
+/* Table Header */
+
+body.dark-mode .table-header-custom th {
+    background: #273449;
+    color: #F8FAFC;
+}
+
+/* Dropdown */
+
+body.dark-mode .dropdown-menu {
+    background: #1E293B;
+    border: 1px solid #334155;
+}
+
+body.dark-mode .dropdown-item {
+    color: #F8FAFC;
+}
+
+    body.dark-mode .dropdown-item:hover {
+        background: #334155;
+    }
+
+/* Buttons */
+
+body.dark-mode .btn-outline-secondary {
+    background: #273449;
+    border-color: #475569;
+    color: #F8FAFC;
+}
+
+    body.dark-mode .btn-outline-secondary:hover {
+        background: #3B82F6;
+        border-color: #3B82F6;
+        color: white;
+    }

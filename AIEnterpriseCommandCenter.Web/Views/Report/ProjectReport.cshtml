@@ -1,0 +1,287 @@
+﻿@model IEnumerable<AIEnterpriseCommandCenter.Application.DTOs.Project.ProjectDto>
+
+@{
+    ViewData["Title"] = "Project Report";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-kanban-fill text-primary me-2"></i>
+                Project Report
+            </h2>
+
+            <p class="text-muted">
+                Enterprise project information preview before exporting.
+            </p>
+
+        </div>
+
+        <div>
+
+            <a asp-action="ExportProjectPdf"
+               class="btn btn-danger rounded-pill me-2">
+
+                <i class="bi bi-file-earmark-pdf"></i>
+
+                PDF
+
+            </a>
+
+            <a asp-action="ExportProjectExcel"
+               class="btn btn-success rounded-pill me-2">
+
+                <i class="bi bi-file-earmark-excel"></i>
+
+                Excel
+
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary rounded-pill">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Summary -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body text-center">
+
+                    <h2 class="fw-bold text-primary">
+
+                        @Model.Count()
+
+                    </h2>
+
+                    <div class="text-muted">
+
+                        Total Projects
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Table -->
+
+    <div class="card border-0 shadow rounded-4">
+
+        <div class="card-header bg-white">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+
+                    <h5 class="fw-bold mb-0">
+
+                        Project List
+
+                    </h5>
+
+                </div>
+
+                <div class="col-md-6 text-end">
+
+                    <input type="text"
+                           id="searchProject"
+                           class="form-control"
+                           placeholder="Search project..." />
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0"
+                   id="projectTable">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Code</th>
+                        <th>Project</th>
+                        <th>Manager</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Progress</th>
+                        <th>Team</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+
+                                <span class="badge bg-dark">
+
+                                    @item.ProjectCode
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <strong>@item.ProjectName</strong>
+
+                            </td>
+
+                            <td>
+
+                                @item.ManagerName
+
+                            </td>
+
+                            <td>
+
+                                @if (item.Priority == AIEnterpriseCommandCenter.Domain.Enums.ProjectPriority.High)
+                                {
+                                    <span class="badge bg-danger">High</span>
+                                }
+                                else if (item.Priority == AIEnterpriseCommandCenter.Domain.Enums.ProjectPriority.Medium)
+                                {
+                                    <span class="badge bg-warning text-dark">Medium</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Low</span>
+                                }
+
+                            </td>
+
+                            <td>
+
+                                @if (item.Status == AIEnterpriseCommandCenter.Domain.Enums.ProjectStatus.Completed)
+                                {
+                                    <span class="badge bg-success">Completed</span>
+                                }
+                                else if (item.Status == AIEnterpriseCommandCenter.Domain.Enums.ProjectStatus.Active)
+                                {
+                                    <span class="badge bg-primary">In Progress</span>
+                                }
+                                else if (item.Status == AIEnterpriseCommandCenter.Domain.Enums.ProjectStatus.OnHold)
+                                {
+                                    <span class="badge bg-warning text-dark">On Hold</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@item.Status</span>
+                                }
+
+                            </td>
+
+                            <td style="min-width:170px;">
+
+                                <div class="progress" style="height:10px;">
+
+                                    <div class="progress-bar bg-success"
+                                         style="width:@item.Progress%">
+                                    </div>
+
+                                </div>
+
+                                <small class="fw-semibold">
+
+                                    @item.Progress%
+
+                                </small>
+
+                            </td>
+
+                            <td>
+
+                                @item.TeamMembers
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        document.getElementById("searchProject").addEventListener("keyup", function () {
+
+            var value = this.value.toLowerCase();
+
+            document.querySelectorAll("#projectTable tbody tr").forEach(function (row) {
+
+                row.style.display =
+                    row.innerText.toLowerCase().includes(value)
+                        ? ""
+                        : "none";
+
+            });
+
+        });
+
+    </script>
+
+}
+
+<style>
+
+    .table tbody tr:hover {
+        background: #f8f9fa;
+    }
+
+    .badge {
+        font-size: .85rem;
+    }
+
+    .card {
+        border-radius: 20px;
+    }
+
+    .progress {
+        border-radius: 20px;
+    }
+
+    .progress-bar {
+        border-radius: 20px;
+    }
+
+</style>

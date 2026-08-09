@@ -1,0 +1,103 @@
+﻿@model AIEnterpriseCommandCenter.Application.DTOs.Asset.AssetDto
+
+@{
+    ViewData["Title"] = "Asset Details";
+}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-primary text-white">
+
+        <h4 class="mb-0">
+            <i class="bi bi-laptop"></i>
+            Asset Details
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <strong>Asset Code</strong><br />
+                @Model.AssetCode
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Asset Name</strong><br />
+                @Model.AssetName
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Category</strong><br />
+                @Model.Category
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Brand</strong><br />
+                @Model.Brand
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Model</strong><br />
+                @Model.Model
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Purchase Date</strong><br />
+                @Model.PurchaseDate.ToString("dd MMM yyyy")
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Purchase Price</strong><br />
+                ₹ @Model.PurchasePrice.ToString("N2")
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Status</strong><br />
+
+                @if (Model.Status == "Available")
+                {
+                    <span class="badge bg-success">Available</span>
+                }
+                else if (Model.Status == "Assigned")
+                {
+                    <span class="badge bg-primary">Assigned</span>
+                }
+                else
+                {
+                    <span class="badge bg-warning text-dark">@Model.Status</span>
+                }
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Assigned To</strong><br />
+                @Model.EmployeeName
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-footer text-end">
+
+        <a asp-action="Edit"
+           asp-route-id="@Model.Id"
+           class="btn btn-warning">
+
+            <i class="bi bi-pencil-square"></i>
+            Edit
+
+        </a>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
+            Back
+
+        </a>
+
+    </div>
+
+</div>

@@ -1,0 +1,417 @@
+﻿@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-bar-chart-fill text-primary me-2"></i>
+                Reports Center
+            </h2>
+
+            <p class="text-muted mb-0">
+                Generate and export enterprise reports across all modules.
+            </p>
+
+        </div>
+
+    </div>
+
+    
+   
+
+    <!-- Report Cards -->
+
+    <div class="row">
+
+        <!-- Employee -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card report-card shadow-sm border-0 rounded-4">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="report-icon employee-icon">
+
+                            <i class="bi bi-people-fill"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h4 class="report-title">
+                                Employee Report
+                            </h4>
+
+                            <small class="text-muted">
+                                Employee details & departments
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex gap-2">
+
+                        <a asp-action="EmployeeReport"
+                           class="btn btn-preview">
+
+                            <i class="bi bi-eye me-1"></i>
+
+                            Preview
+
+                        </a>
+                        @if (User.IsInRole("Admin") ||
+                            User.IsInRole("Manager"))
+                        {
+                            <a asp-action="ExportEmployeePdf"
+                            class="btn btn-pdf">
+
+                                <i class="bi bi-file-earmark-pdf"></i>
+
+                            </a>
+                        }
+                        @if (User.IsInRole("Admin") ||
+                            User.IsInRole("Manager"))
+                        {
+                            <a asp-action="ExportEmployeeExcel"
+                            class="btn btn-excel">
+
+                                <i class="bi bi-file-earmark-excel"></i>
+
+                            </a>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Asset -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card report-card shadow-sm border-0 rounded-4">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="report-icon asset-icon">
+
+                            <i class="bi bi-laptop"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h4 class="report-title">
+                                Asset Report
+                            </h4>
+
+                            <small class="text-muted">
+                                Assets & inventory
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex gap-2">
+
+                        <a asp-action="AssetReport"
+                           class="btn btn-preview">
+                            <i class="bi bi-eye me-1"></i>Preview
+                        </a>
+
+                        <a asp-action="ExportAssetPdf"
+                           class="btn btn-pdf">
+                            <i class="bi bi-file-earmark-pdf"></i>
+                        </a>
+
+                        <a asp-action="ExportAssetExcel"
+                           class="btn btn-excel">
+                            <i class="bi bi-file-earmark-excel"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Project -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card report-card shadow-sm border-0 rounded-4">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="report-icon project-icon">
+
+                            <i class="bi bi-kanban-fill"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h4 class="report-title">
+                                Project Report
+                            </h4>
+
+                            <small class="text-muted">
+                                Progress & project summary
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex gap-2">
+
+                        <a asp-action="ProjectReport"
+                           class="btn btn-preview">
+                            <i class="bi bi-eye me-1"></i>Preview
+                        </a>
+
+                        <a asp-action="ExportProjectPdf"
+                           class="btn btn-pdf">
+                            <i class="bi bi-file-earmark-pdf"></i>
+                        </a>
+
+                        <a asp-action="ExportProjectExcel"
+                           class="btn btn-excel">
+                            <i class="bi bi-file-earmark-excel"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Ticket -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card report-card shadow-sm border-0 rounded-4">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="report-icon ticket-icon">
+
+                            <i class="bi bi-headset"></i>
+
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h4 class="report-title">
+                                Service Desk Report
+                            </h4>
+
+                            <small class="text-muted">
+                                Ticket analytics & SLA
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex gap-2">
+
+                        <a asp-action="TicketReport"
+                           class="btn btn-preview">
+                            <i class="bi bi-eye me-1"></i>Preview
+                        </a>
+
+                        <a asp-action="ExportTicketPdf"
+                           class="btn btn-pdf">
+                            <i class="bi bi-file-earmark-pdf-fill"></i>
+                        </a>
+
+                        <a asp-action="ExportTicketExcel"
+                           class="btn btn-excel">
+                            <i class="bi bi-file-earmark-excel-fill"></i>
+                            
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    /* ===========================
+       REPORTS CENTER
+    =========================== */
+
+    .report-card {
+        background: #16233d;
+        border: 1px solid #E5E7EB;
+        border-radius: 18px;
+        transition: .25s ease;
+        overflow: hidden;
+    }
+
+        .report-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,.25);
+        }
+
+            .report-card:hover .report-icon {
+                transform: scale(1.08);
+            }
+    .report-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+        color: #fff;
+    }
+
+    /* Enterprise Colors */
+
+    .employee-icon {
+        background: #22C7D6;
+    }
+
+    .asset-icon {
+        background: #06B6D4;
+    }
+
+    .project-icon {
+        background: #14B8A6;
+    }
+
+    .ticket-icon {
+        background: #6366F1;
+    }
+
+    .report-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: white;
+    }
+
+    .report-subtitle {
+        color: navajowhite;
+        font-size: 16px;
+    }
+
+    .report-divider {
+        border-top: 1px solid #E5E7EB;
+        margin: 20px 0;
+    }
+
+    
+    .btn-preview {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 7px 16px;
+        border-radius: 25px;
+        border: 1.5px solid #32D4E6;
+        background: transparent;
+        color: #32D4E6;
+        font-size: 14px;
+        font-weight: 600;
+        transition: .25s;
+    }
+
+        .btn-preview:hover {
+            background: #32D4E6;
+            color: #fff;
+        }
+
+
+    /* PDF Button */
+
+    .btn-pdf {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        background: #E85D75;
+        color: #fff;
+        transition: .25s;
+        box-shadow: 0 0 12px rgba(232,93,117,.35);
+    }
+
+        .btn-pdf:hover {
+            background: #F46A84;
+            transform: translateY(-2px);
+        }
+
+
+    /* Excel Button */
+
+    .btn-excel {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        background: #37C978;
+        color: #fff;
+        transition: .25s;
+        box-shadow: 0 0 12px rgba(55,201,120,.35);
+    }
+
+        .btn-excel:hover {
+            background: #47D686;
+            transform: translateY(-2px);
+        }
+
+
+        /* Icons */
+
+        .btn-preview i,
+        .btn-pdf i,
+        .btn-excel i {
+            font-size: 15px;
+        }
+  
+
+</style>

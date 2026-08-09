@@ -1,0 +1,62 @@
+﻿@model AIEnterpriseCommandCenter.Application.DTOs.Asset.CreateAssetDto
+
+@{
+    ViewData["Title"] = "Add Asset";
+}
+
+<h2 class="mb-4">Add New Asset</h2>
+
+<form asp-action="Create" method="post">
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+            <label>Asset Code</label>
+            <input asp-for="AssetCode" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Asset Name</label>
+            <input asp-for="AssetName" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Category</label>
+            <input asp-for="Category" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Brand</label>
+            <input asp-for="Brand" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Model</label>
+            <input asp-for="Model" class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Purchase Date</label>
+            <input asp-for="PurchaseDate"
+                   type="date"
+                   class="form-control" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Purchase Price</label>
+            <input asp-for="PurchasePrice"
+                   class="form-control" />
+        </div>
+
+    </div>
+
+    <button class="btn btn-success">
+        Save Asset
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>

@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Assign Asset";
+}
+
+<h2 class="mb-4">Assign Asset</h2>
+
+<form asp-action="Assign" method="post">
+
+    <input type="hidden"
+           name="assetId"
+           value="@ViewBag.AssetId" />
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Select Employee
+        </label>
+
+        <select name="employeeId"
+                class="form-select">
+
+            <option value="">-- Select Employee --</option>
+
+            @foreach (var employee in ViewBag.Employees)
+            {
+                <option value="@employee.Id">
+                    @employee.EmployeeCode -
+                    @employee.FirstName
+                    @employee.LastName
+                </option>
+            }
+
+        </select>
+
+    </div>
+
+    <button type="submit"
+            class="btn btn-success">
+
+        Assign Asset
+
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+
+        Cancel
+
+    </a>
+
+</form>

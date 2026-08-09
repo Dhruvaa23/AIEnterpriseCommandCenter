@@ -1,0 +1,398 @@
+/** {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}*/
+
+/* ===========================
+   BODY
+=========================== */
+
+/*body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    background: radial-gradient(circle at top right,#4F46E5 0%,transparent 28%), radial-gradient(circle at bottom left,#2563EB 0%,transparent 35%), linear-gradient(135deg,#081B4B,#123E9A,#2563EB);
+}*/
+
+    /* Animated Grid */
+
+    /*body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
+        background-size: 45px 45px;
+        animation: moveGrid 15s linear infinite;
+        opacity: .35;
+    }*/
+
+/* ===========================
+   SPLASH
+=========================== */
+
+/*.splash-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    color: white;
+    animation: fadeIn 1s ease;
+}*/
+
+/* ===========================
+   LOGO
+=========================== */
+
+/*.logo-container {
+    animation: floatLogo 4s ease-in-out infinite;
+}
+
+.company-logo {
+    width: 420px;
+    max-width: 80%;
+    animation: floatLogo 4s ease-in-out infinite;
+    filter: drop-shadow(0 10px 30px rgba(255,255,255,.20)) drop-shadow(0 0 60px rgba(37,99,235,.35));
+}
+.logo-container {
+    position: relative;
+    display: inline-block;
+}
+
+    .logo-container::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 360px;
+        height: 360px;
+        transform: translate(-50%,-50%);
+        border-radius: 50%;
+        background: radial-gradient( circle, rgba(255,255,255,.12), transparent 70% );
+        z-index: -1;
+        animation: pulseGlow 3s ease-in-out infinite;
+    }
+@keyframes pulseGlow {
+
+    0%,100% {
+        transform: translate(-50%,-50%) scale(1);
+        opacity: .6;
+    }
+
+    50% {
+        transform: translate(-50%,-50%) scale(1.08);
+        opacity: 1;
+    }
+}*/
+
+/* ===========================
+   TEXT
+=========================== */
+
+/*.tagline {
+    font-size: 26px;
+    font-weight: 300;
+    color: #E5E7EB;
+    letter-spacing: 2px;
+    margin-bottom: 45px;
+}*/
+
+/* ===========================
+   LOADER
+=========================== */
+
+/*.loader {
+    width: 460px;
+    max-width: 85%;
+    height: 10px;
+    border-radius: 30px;
+    background: rgba(255,255,255,.18);
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(255,255,255,.08);
+}
+
+.loader-bar {
+    background: linear-gradient( 90deg, #06B6D4, #3B82F6, #8B5CF6 );
+    box-shadow: 0 0 20px rgba(59,130,246,.6);
+    animation: loading 3s linear forwards;
+}
+
+.loading-text {
+    margin-top: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}*/
+
+/* ===========================
+   FOOTER
+=========================== */
+
+/*.powered {
+    margin-top: 60px;
+    color: #CBD5E1;
+    font-size: 15px;
+    letter-spacing: 2px;
+}*/
+
+/* ===========================
+   ANIMATIONS
+=========================== */
+
+/*@keyframes loading {
+
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes floatLogo {
+
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes moveGrid {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(45px);
+    }
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}*/
+/* ================================
+   AI Enterprise Splash Screen
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI",sans-serif;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: radial-gradient(circle at top,#4F7CFF 0%,transparent 35%), radial-gradient(circle at bottom left,#0A1E54 0%,transparent 45%), linear-gradient(135deg,#08162F,#123B9D,#2E63FF);
+}
+
+    /* Moving grid */
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle,rgba(255,255,255,.08) 1px,transparent 1px);
+        background-size: 45px 45px;
+        animation: gridMove 15s linear infinite;
+        opacity: .35;
+    }
+
+    /* Floating particles */
+
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(rgba(255,255,255,.8) 1px,transparent 1px);
+        background-size: 90px 90px;
+        opacity: .12;
+        animation: particles 25s linear infinite;
+    }
+
+/* ============================= */
+
+.splash-container {
+    width: 700px;
+    text-align: center;
+    color: white;
+    animation: fadeUp 1.2s ease;
+    z-index: 2;
+}
+
+/* Logo Card */
+
+.logo-container {
+    width: 430px;
+    height: 280px;
+    margin: auto;
+    margin-bottom: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 28px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(14px);
+    animation: floatLogo 4s ease-in-out infinite;
+}
+
+.company-logo {
+    width: 350px;
+    animation: glow 2s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 18px rgba(255,255,255,.2));
+}
+
+/* ============================= */
+
+.tagline {
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: white;
+    margin-bottom: 40px;
+}
+
+/* ============================= */
+
+.loader {
+    width: 520px;
+    height: 10px;
+    margin: auto;
+    background: rgba(255,255,255,.15);
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.loader-bar {
+    width: 0%;
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient( 90deg, #00D4FF, #4F7CFF, #7B61FF);
+    animation: loading 3s linear forwards;
+}
+
+/* ============================= */
+
+.loading-text {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #E5EEFF;
+    letter-spacing: 1px;
+}
+
+.powered {
+    margin-top: 65px;
+    color: #BFD2FF;
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
+/* ============================= */
+/* Animations */
+/* ============================= */
+
+@keyframes loading {
+
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes glow {
+
+    from {
+        filter: drop-shadow(0 0 10px rgba(255,255,255,.2));
+    }
+
+    to {
+        filter: drop-shadow(0 0 35px rgba(255,255,255,.6));
+    }
+}
+
+@keyframes floatLogo {
+
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gridMove {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(45px);
+    }
+}
+
+@keyframes particles {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(90px);
+    }
+}

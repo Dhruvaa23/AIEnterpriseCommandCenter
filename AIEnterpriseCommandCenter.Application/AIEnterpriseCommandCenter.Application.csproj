@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AIEnterpriseCommandCenter.Domain\AIEnterpriseCommandCenter.Domain.csproj" />
+    <ProjectReference Include="..\AIEnterpriseCommandCenter.Shared\AIEnterpriseCommandCenter.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="Validatators\" />
+  </ItemGroup>
+
+</Project>

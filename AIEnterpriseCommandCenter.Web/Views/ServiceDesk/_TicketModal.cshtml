@@ -1,0 +1,273 @@
+﻿@model AIEnterpriseCommandCenter.Application.DTOs.ServiceDesk.TicketDto
+
+<div class="modal fade"
+     id="ticketModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content service-modal">
+
+            <!-- Header -->
+
+            <div class="modal-header border-0">
+
+                <div>
+
+                    <div class="ticket-id">
+                        @Model.TicketNumber
+                    </div>
+
+                    <h3 class="ticket-title mt-2">
+                        @Model.Title
+                    </h3>
+
+                </div>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <!-- Body -->
+
+            <div class="modal-body">
+
+                <p class="ticket-description">
+
+                    @Model.Description
+
+                </p>
+
+                <div class="row mt-4">
+
+                    <div class="col-md-4">
+
+                        <small class="label">
+                            Raised By
+                        </small>
+
+                        <div class="value">
+
+                            @Model.EmployeeName
+
+                        </div>
+
+                    </div>
+
+                    @* <div class="col-md-4">
+
+                        <small class="label">
+                            Assigned To
+                        </small>
+
+                        <div class="value">
+
+                            @(string.IsNullOrEmpty(Model.AssignedTo)
+                                                        ? "Unassigned"
+                                                        : Model.AssignedTo)
+
+                        </div>
+
+                    </div> *@
+
+                    <div class="col-md-4">
+
+                        <small class="label">
+                            Category
+                        </small>
+
+                        <div class="value">
+
+                            @Model.Category
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-4">
+
+                    <span class="badge bg-warning">
+
+                        @Model.Priority
+
+                    </span>
+
+                    <span class="badge bg-success ms-2">
+
+                        @Model.Status
+
+                    </span>
+
+                </div>
+
+                <!-- AI Suggestion -->
+
+                <div class="ai-box mt-4">
+
+                    <div class="ai-title">
+
+                        🤖 AI Suggested Solution
+
+                    </div>
+
+                    <div class="mt-2">
+
+                        @if (string.IsNullOrWhiteSpace(Model.AISuggestedSolution))
+                        {
+                            <span class="text-muted">
+                               
+                                No AI suggestion available.
+
+                            </span>
+                        }
+                        else
+                        {
+                            @Html.Raw(Model.AISuggestedSolution.Replace("\n", "<br/>"))
+                        }
+
+                    </div>
+
+                    <div class="mt-3 text-info">
+
+                        Confidence :
+                        <strong>@Model.AIConfidence%</strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+
+            <div class="modal-footer border-0">
+                @if (User.IsInRole("Admin") ||
+               User.IsInRole("ITAdmin"))
+                {
+                    <form asp-action="UpdateStatus"
+                    method="post">
+
+                        <input type="hidden"
+                        name="id"
+                        value="@Model.Id" />
+
+                        <input type="hidden"
+                        name="status"
+                        value="InProgress" />
+
+                        <button class="btn btn-warning">
+
+                            Move To In Progress
+
+                        </button>
+
+                    </form>
+                }
+                @if (User.IsInRole("Admin") ||
+               User.IsInRole("ITAdmin"))
+                {
+                    <form asp-action="UpdateStatus"
+                    method="post">
+
+                        <input type="hidden"
+                        name="id"
+                        value="@Model.Id" />
+
+                        <input type="hidden"
+                        name="status"
+                        value="Resolved" />
+
+                        <button class="btn btn-success">
+
+                            Resolve
+
+                        </button>
+
+                    </form>
+                }
+                @if (User.IsInRole("Admin") ||
+               User.IsInRole("ITAdmin"))
+                {
+                    <form asp-action="UpdateStatus"
+                    method="post">
+
+                        <input type="hidden"
+                        name="id"
+                        value="@Model.Id" />
+
+                        <input type="hidden"
+                        name="status"
+                        value="Closed" />
+
+                        <button class="btn btn-secondary">
+
+                            Close
+
+                        </button>
+
+                    </form>
+                }
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .service-modal {
+        background: #17233c;
+        color: white;
+        border-radius: 20px;
+        border: 1px solid #2f4468;
+    }
+
+    .ticket-id {
+        color: #5fd2ff;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .ticket-title {
+        font-weight: 700;
+    }
+
+    .ticket-description {
+        color: #c7d0df;
+    }
+
+    .label {
+        color: #8ea3bf;
+    }
+
+    .value {
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+    }
+
+    .ai-box {
+        background: #213652;
+        border-left: 5px solid #33d9b2;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .ai-title {
+        color: #33d9b2;
+        font-weight: 700;
+    }
+
+    .modal-footer form {
+        display: inline-block;
+    }
+
+</style>

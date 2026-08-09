@@ -1,0 +1,67 @@
+﻿@model AIEnterpriseCommandCenter.Application.DTOs.Project.ProjectDto
+
+
+
+<div class="project-card"
+     style="cursor:pointer;"
+     onclick="loadProject(@Model.Id)">
+
+    <div class="d-flex justify-content-between">
+
+        <small class="text-info fw-bold">
+            @Model.ProjectCode
+        </small>
+
+        <span class="status-badge @Model.Status.ToString().ToLower()">
+            @Model.Status
+        </span>
+
+    </div>
+
+    <h4 class="mt-3 mb-2">
+        @Model.ProjectName
+    </h4>
+
+    <p class="text-muted mb-4">
+
+        Managed by
+
+        <strong>
+            @Model.ManagerName
+        </strong>
+
+        •
+
+        Due
+
+        @Model.EndDate.ToString("dd MMM yyyy")
+
+    </p>
+
+    <div class="progress mb-2">
+
+        <div class="progress-bar bg-info"
+             style="width:@Model.Progress%">
+        </div>
+
+    </div>
+
+    <div class="d-flex justify-content-between">
+
+        <small>
+
+            @Model.Progress% Complete
+
+        </small>
+
+        <small>
+
+            @Model.TeamMembers Members
+
+        </small>
+
+    </div>
+    
+
+</div>
+

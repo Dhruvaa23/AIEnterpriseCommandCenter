@@ -1,0 +1,77 @@
+﻿@model List<AIEnterpriseCommandCenter.Application.DTOs.Notification.NotificationDto>
+
+@if (!Model.Any())
+{
+    <li class="dropdown-item text-center text-muted p-4">
+        No notifications
+    </li>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <li id="notification-@item.Id" class="dropdown-item position-relative py-3">
+
+            <!-- Top Right Icons -->
+            <div class="position-absolute top-0 end-0 mt-2 me-2 d-flex">
+
+                @if (!item.IsRead)
+                {
+                    <a href="#"
+                       onclick="markAsRead(@item.Id); return false;"
+                       class="text-success me-2"
+                       title="Mark as Read">
+
+                        <i class="bi bi-check2-circle fs-5"></i>
+
+                    </a>
+                }
+                <a href="#"
+                   onclick="deleteNotification(@item.Id); return false;"
+                   class="text-danger"
+                   title="Delete">
+
+                    <i class="bi bi-trash fs-5"></i>
+
+                </a>
+
+            </div>
+
+            <!-- Notification Content -->
+            <div class="pe-5">
+
+                <div class="fw-semibold">
+                    @item.Title
+                </div>
+
+                <small class="text-muted">
+                    @item.Message
+                </small>
+
+                <br />
+
+                <small class="text-secondary">
+                    @item.CreatedOn.ToString("dd MMM yyyy hh:mm")
+                </small>
+
+            </div>
+
+        </li>
+
+        
+
+        <li><hr class="dropdown-divider" /></li>
+    }
+
+    <li>
+
+        <a asp-controller="Notification"
+           asp-action="All"
+           class="dropdown-item text-center fw-bold">
+
+            View All Notifications
+
+        </a>
+
+    </li>
+}

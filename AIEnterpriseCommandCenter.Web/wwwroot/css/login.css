@@ -1,0 +1,278 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI",sans-serif;
+}
+
+body {
+    background: #f4f7fc;
+    overflow: hidden;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.login-page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+/* =========================
+   LEFT PANEL
+========================= */
+
+.left-panel {
+    width: 50%;
+    position: relative;
+    background: linear-gradient(180deg,#0B1F63,#1746D1);
+    color: #fff;
+    overflow: hidden;
+}
+
+    .left-panel::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: -140px;
+        width: 280px;
+        height: 100%;
+        background: #fff;
+        transform: skewX(-12deg);
+    }
+
+.grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+    background-size: 48px 48px;
+}
+
+.left-content {
+    position: relative;
+    z-index: 5;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 50px 70px;
+}
+
+.logo {
+    width: 220px;
+}
+
+.tagline {
+    margin-top: auto;
+    margin-bottom: 120px;
+}
+
+    .tagline h1 {
+        font-size: 58px;
+        line-height: 70px;
+        font-weight: 700;
+    }
+
+    .tagline span {
+        color: #7ec8ff;
+    }
+
+    .tagline p {
+        margin-top: 30px;
+        font-size: 20px;
+        color: #dbe7ff;
+        width: 430px;
+        line-height: 34px;
+    }
+
+.line {
+    margin-top: 35px;
+    width: 160px;
+    height: 5px;
+    background: #58ff83;
+    border-radius: 50px;
+}
+
+/* =========================
+   RIGHT PANEL
+========================= */
+
+.right-panel {
+    width: 50%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    width: 520px;
+}
+
+.login-text {
+    color: #6b7280;
+    margin-top: -18px;
+    margin-bottom: 35px;
+    font-size: 16px;
+    line-height: 24px;
+}
+    
+
+/* =========================
+   TITLES
+========================= */
+
+.welcome {
+    font-size: 20px;
+    color: #555;
+}
+
+.login-box h2 {
+    margin-top: 8px;
+    margin-bottom: 35px;
+    font-size: 44px;
+    font-weight: 700;
+    color: #1d1d1d;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 16px;
+        color: #333;
+        font-weight: 600;
+    }
+
+.form-control {
+    width: 100%;
+    height: 60px;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    padding: 0 20px;
+    font-size: 17px;
+    transition: .3s;
+    background: #fafafa;
+}
+
+    .form-control:focus {
+        outline: none;
+        border-color: #1657db;
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(22,87,219,.12);
+    }
+
+/* =========================
+   OPTIONS
+========================= */
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 35px;
+}
+
+    .options label {
+        font-size: 15px;
+        color: #444;
+    }
+
+    .options a {
+        color: #1657db;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.btn-login {
+    width: 100%;
+    height: 62px;
+    border: none;
+    border-radius: 10px;
+    background: #1657db;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+    .btn-login:hover {
+        background: #0f47bc;
+        transform: translateY(-2px);
+    }
+
+
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    margin-top: 35px;
+    text-align: center;
+    color: #8a8a8a;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+
+.login-box {
+    animation: fadeUp .8s ease;
+}
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px) {
+
+    .left-panel {
+        display: none;
+    }
+
+    .right-panel {
+        width: 100%;
+    }
+
+    .login-box {
+        width: 90%;
+        max-width: 500px;
+    }
+
+    body {
+        overflow: auto;
+    }
+}
+
