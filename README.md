@@ -260,30 +260,7 @@ It demonstrates practical experience in:
 
 ---
 
-## 📸 Screenshots
 
-Add screenshots of the following modules here:
-
-* Dashboard
-* Employee Management
-* Asset Management
-* Service Desk
-* AI Assistant
-* Reports
-* Notifications
-
-Example:
-
-```text
-screenshots/
-├── dashboard.png
-├── employees.png
-├── assets.png
-├── servicedesk.png
-└── ai-assistant.png
-```
-
----
 
 ## 👩‍💻 Developer
 
@@ -296,8 +273,7 @@ Vadodara, Gujarat, India
 ### Links
 
 * GitHub: https://github.com/Dhruvaa23
-* LinkedIn: Add your LinkedIn profile
-* Portfolio: Add your portfolio URL
+
 
 ---
 
